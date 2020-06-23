@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{%block title %} {% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+     {% for post in garden_posts %} 
+<div class="col" id="midbarner">
+     
+        <div class="card mt-3" style="width: 32rem;">
+            
+            <img class="card-img-top custom" src="{{ post.post_image.url }}" alt="">
+            <div class="card-body custom-body">
+                <h5 class="card-title custom-alltitles">{{ post.title }} 
+                     | {{ post.comment_count }} comments</h5>
+                <p class="card-text">{{ post.description }} </p>
+                <a href="#" >Read More</a>
+                
+            </div>
+            <br>
+        </div>    
+    {% endfor %}
+    <br>
+    <br>
+</div>
+</div>
+
+
+{% endblock %}

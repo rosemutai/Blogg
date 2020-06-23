@@ -1,0 +1,148 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+#topheader{
+    width: 100%;
+    height: 75px;
+}
+
+#logo{
+    margin-top: 0px;
+    border-radius: 650px;
+    transform: rotate(90deg);
+}
+
+.topbarner{
+    width: 100%;
+
+}
+
+.blogtitle{
+    color: burlywood;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+a{
+    color: white;
+}
+
+a.navlink{
+    text-align: center;
+    font-size: medium;
+    padding: 10px;
+    color: whitesmoke;
+    float: right;
+}
+
+
+a:active{
+    background-color: whitesmoke;
+}
+
+input[type=text] {
+    float:right;
+    border: none;
+    padding: 8px;
+    text-align: right;
+    font-size: medium;
+    margin-right: 10px;
+    
+}
+::placeholder{
+    color: burlywood;
+}
+
+.topbarner{
+    width: 100%;
+    height: 75px;
+    background-color: burlywood;
+    
+}
+
+.navbar-custom{
+    background-color: burlywood;
+}
+
+.nav-link-custom{
+    color: white;
+}
+.cat-link-custom{
+    color: rgb(14, 12, 9);
+}
+
+#midimage{
+    margin-left: 40px;
+}
+
+.custom{
+    width: 300px;
+    height: 250px;
+}
+
+
+.botomfooter{
+    width: 100%;
+    height: 150px;
+    background-color: burlywood;
+}
+
+.footerimgs{
+    border-radius: 100px;
+    margin-top: 20px;
+    margin-left: 200px;
+    
+}
+.footernames{
+    
+    margin-left: 150px;
+    padding: 10px;
+    color: whitesmoke;
+
+}
+
+.custom-body{
+    text-align: center;
+}
+
+.custom-alltitles{
+    color: burlywood;
+}
+
+.page{
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    background-color: red;
+    text-align: center;
+}
+
+.comments{
+    padding: 10px;
+}
+
+.card{
+    border: none;
+}
+
+
+#titledetail{
+    color: burlywood;
+}
+
+.myfooter{
+    width: 100%;
+    height: 250px;
+    background-color: burlywood;
+    
+}
+
+.contacimgs{
+    border-radius: 100px;
+}
+
+.loginform{
+    text-align: center;
+    width: 50%;
+}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{%block title %} comment {% endblock %}
+
+{% block content %}
+
+<main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+  
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+  
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+  
+          <img src="{{ post.post_image.url }}" class="img-fluid" alt="">
+  
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="p-4">
+  
+            <div class="mb-3">
+              <a href="">
+                <span class="badge purple mr-1">{{post.category }}</span>
+              </a>
+            </div>
+  
+            
+            <p class="lead font-weight-bold">Description</p>
+  
+            <p>{{ post.description }}</p>
+            {% for comment in comments %} 
+            
+                <div class="comments">
+                  {{ comment.name }}
+                  {{ comment.created_on }}
+                  {{ comment.body | linebreaks }}
+                </div>
+            
+            {% endfor %}
+            <p>{{ post.body }}</p>
+  
+             
+            <a href="#" class="btn btn-primary btn-md my-0 p">
+              Like
+              <i class="fas fa-shopping-cart ml-1"></i>
+            </a>
+            <a href="#" class="btn btn-danger btn-md my-0 p">
+              Dislike
+            </a>
+  
+  
+          </div>
+         
+  
+        </div>
+      
+  
+      </div>
+      
+      <hr>
+  
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center wow fadeIn">
+  
+        <!--Grid column-->
+        <div class="col-md-6 text-center">
+  
+         
+        </div>
+       
+  
+      </div>
+     
+    </div>
+  </main>
+
+{% endblock %} 

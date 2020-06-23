@@ -1,0 +1,75 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+#topheader{
+    width: 100%;
+    height: 75px;
+}
+
+#logo{
+    margin-top: 0px;
+    border-radius: 650px;
+    transform: rotate(90deg);
+}
+
+.topbarner{
+    width: 100%;
+
+}
+
+.blogtitle{
+    color: burlywood;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+a.navlink{
+    text-align: center;
+    font-size: medium;
+    padding: 10px;
+    color: whitesmoke;
+    float: right;
+}
+
+
+a:active{
+    background-color: whitesmoke;
+}
+
+form{
+  
+    border: none;
+    padding: 8px;
+    font-size: medium;
+    margin-left: 100px;
+    
+}
+
+.loginheading{
+    margin-left: 100px;
+
+}
+
+::placeholder{
+    color: burlywood;
+}
+
+.topbarner{
+    width: 100%;
+    height: 75px;
+    background-color: burlywood;
+    
+}
+
+.navbar-custom{
+    background-color: burlywood;
+}
+
+.nav-link-custom{
+    color: white;
+}
+.cat-link-custom{
+    color: rgb(14, 12, 9);
+}

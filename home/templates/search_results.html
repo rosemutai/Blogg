@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{%block title %} search-results{% endblock %}
+
+{% block content %} 
+
+<div class="row">
+            
+    <div class="col md-8" id="midbarner">
+        {% for post in queryset %}
+        <center><a class="cat-link-custom" href="#"><h3 class="card-title ">{{ post.title }} </h3></a></center>
+            <div class="card mt-3" style="width: 32rem;">
+                
+                <img class="card-img-top custom" src="{{ post.post_image.url }}" alt="">
+                <div class="card-body custom-body">
+                    <h5 class="card-title custom-alltitles"> 
+                        <button type="submit" class="btn btn-primary btn-sm">Like</button>
+                         | {{ post.comment_count }} Likes</h5>
+                    <p class="card-text">{{ post.description }} </p>
+                    <a href="#" >Read More</a>
+                    
+                </div>
+                <br>
+            </div>    
+        {% endfor %}
+        <br>
+        <br>
+    </div>
+</div>
+
+{% endblock %}

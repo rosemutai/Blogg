@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title%} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'js/bootstrap.js' %}">
+    <link rel="stylesheet" href="{% static 'js/bootstrap.min.js' %}">
+</head> 
+<body>
+    <header id=topheader>
+        <center>
+            
+            <p></p><h3 ><em class="blogtitle">My Blog :)</em></h3></p>
+            
+            <small><em class="blogtitle">Let's Read :) :)</em></small>
+        </center>
+    </header>
+    
+    <div class="topbarner" >
+
+        <nav class="navbar navbar-expand-lg  navbar-custom">
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a href="{% url 'index' %}" class="nav-link nav-link-custom">Home <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'about' %}" class="nav-link nav-link-custom">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'articles' %}" class="nav-link nav-link-custom">Articles</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'login' %}" class="nav-link nav-link-custom">Login</a>
+                </li>
+            </ul>
+            <form action="{%url 'search' %}"  class="form-inline my-2 my-lg-0">
+                <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search"
+                aria-label="Search">
+                <button id="searchblog"class="btn bg-white my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+        </nav>
+        
+    <br>
+    
+    </div>
+    
+   
+    
+    {% block content %} {%  endblock %}
+
+<footer>
+    <div class="footer myfooter">
+        <div class="row text-center p-4">
+            <div class="col-md-3">
+                    <strong>My Blog</strong>
+                    <img class="img-fluid" src="{% static 'images/coder.jpg' %}" alt="">
+                    <p class="nav-link-custom">A blog series written by Rose Mutai,
+                        a software developer based in Nairobi, Kenya</p>
+            </div>
+
+            <div class="col-md-3">
+                <b><em>Quick Links</em></b>
+                
+                <p><a class="nav-link-custom" href="{% url 'about' %}">About</a></p>
+                <p><a class="nav-link-custom" href="#searchblog">Search</a></p>
+                <p><a class="nav-link-custom" href="#topheader">Top</a></p>
+              
+               
+            </div>
+
+            <div class="col-md-3">
+                <b>Leave a comment</b>
+               <br>
+               <br>
+               <p><a href="#}" class="btn bg-white my-2 my-sm-0" type="button">comment</a></p>
+                
+            </div>
+
+            <div id="contactme" class="col-md-3">
+                <p><b>Follow</b></p>
+                <img class="contacimgs" src="{% static 'images/coder.jpg' %}" width="25" height="25" alt="twitter"> 
+                <img class="contacimgs" src="{% static 'images/coder.jpg' %}" width="25" height="25" alt="facebook">
+                <img class="contacimgs" src="{% static 'images/coder.jpg' %}" width="25" height="25" alt="instagram">
+    
+            </div>
+        </div>
+
+        
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{%block title %} programming{% endblock %}
+
+{% block content %}
+
+<center><h3>Programming Articles</h3></center>
+<div class="row ml-5">
+    
+     {% for post in prog_posts %} 
+        <div class="col md-6" id="midbarner">
+            
+                <div class="card mt-3" style="width: 32rem;">
+                    
+                    <img class="card-img-top custom" src="{{ post.post_image.url }}" alt="">
+                    <div class="card-body custom-body">
+                        <h5 class="card-title custom-alltitles">{{ post.title }} 
+                            | {{ post.comment_count }} comments</h5>
+                        <p class="card-text">{{ post.description }} </p>
+                        <a href="#" >Read More</a>
+                        
+                    </div>
+                    <br>
+                </div>    
+        </div>
+    {% endfor %}
+    <br>
+    <br>
+
+</div>
+
+
+{% endblock %}

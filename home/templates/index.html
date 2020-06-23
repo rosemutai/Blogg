@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} blog-home {% endblock %}
+
+{% block content %}
+
+        <div class="row">
+            
+            <div class="col md-8" id="midbarner">
+                {% for post in posts %}
+                <center><a class="cat-link-custom" href="{% url 'programming' %}"><h3 class="card-title ">{{ post.title }} </h3></a></center>
+                    <div class="card mt-3" style="width: 32rem;">
+                        
+                        <img class="card-img-top custom" src="{{ post.post_image.url }}" alt="">
+                        <div class="card-body custom-body">
+                            <h5 class="card-title custom-alltitles"> 
+                                <button type="submit" class="btn btn-primary btn-sm"
+                                onclick="document.getElementById('likebutton').submit()"
+                                >Like</button> {{ post.likes }} 
+                                 
+                                 <button type="submit" class="btn btn-danger btn-sm"
+                                 onclick="document.getElementById('dislikebutton').submit()"
+                                 >Dislike</button> {{ post.dislikes }} 
+                                </h5>
+                                <form id="likebutton" method="POST" action="post/{{post.id}}/preference/1">
+                                {% csrf_token %}
+                                <input type="hidden">
+                            </form>
+
+                            <form id="dislikebutton" method="POST" action="post/{{post.id}}/preference/2">
+                                {% csrf_token %}
+                                <input type="hidden">
+                            </form>
+                            <p class="card-text">{{ post.description }} </p>
+                            <a href="#" >Read More</a>
+
+                        </div>
+                        <br>
+                    </div>    
+                {% endfor %}
+                <br>
+                <br>
+            </div>
+            <div class="col md-4 ml-5">
+                <h4><u>Categories</u></h4>
+                <br>
+                   {% for cat in cat_count %} 
+                      <h5><a href="#">#{{ cat.category__name}}-</a> <b>{{cat.category__name__count }}</b></h5>
+                   <br>
+                    
+                   {% endfor %}
+                   <br>
+            
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
