@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 User = get_user_model()
 
@@ -17,6 +18,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=50)
+    url= models.SlugField(max_length=300, default='')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -25,6 +27,13 @@ class Post(models.Model):
     featured = models.BooleanField()
     body = models.TextField()
     user = models.ManyToManyField(User, blank=True)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
+    
+    def save(self, *args, **kwargs):
+        self.url = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+     
     
 
     def get_absolute_url(self):
@@ -46,3 +55,13 @@ class PostComment(models.Model):
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.body, self.name)
+
+class LikeDislike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    value = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.user) + ':' + str(self.post) + ':' + str(self.value)
+        

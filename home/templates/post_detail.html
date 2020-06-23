@@ -1,27 +1,25 @@
-{% with comments.count as total_comments %} 
- <h2>{{ total_comments }} comment {{ total_comments|pluralize </h2>
+<h1>Posts</h1>
 
-{% endwith %}
+<br /><br />
 
-{% for comment in comments %}
-<div class="comment">
-    <p class="info">
-        Comment {{ forloop.counter }} by {{ comment.name }}
-        {{ comment.created }}
-    </p>
-    {{ comment.body|linebreaks }}
-</div>
-{% empty %}
-<p>There are no comments yet.</p>
-{% endfor %}
+<h1>Title: {{eachpost.title}}</h1>
 
-{% if new_comment %}
-<h2>Your comment has been added.</h2>
-{% else %}
-<h2>Add a new comment</h2>
-<form action="." method="post">
-    {{ comment_form.as_p }}
+<h1>Content: {{eachpost.content}}</h1>
+<br />
+
+<h1>Author: {{ eachpost.author }}</h1>
+
+
+<a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{post.likes}} | <a href="#"
+    onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{post.dislikes}}
+
+
+<form id="likebutton" method="POST" action="{{post.id}}/preference/1/">
     {% csrf_token %}
-    <p><input type="submit" value="Add comment"></p>
+    <input type="hidden">
 </form>
-{% endif %}
+
+<form id="dislikebutton" method="POST" action="{{post.id}}/preference/2/">
+    {% csrf_token %}
+    <input type="hidden">
+</form>

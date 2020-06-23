@@ -4,7 +4,7 @@ import re
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import Post
+from .models import Post, LikeDislike
 from .forms import  LoginForm, UserRegistrationForm
 # CommentForm
 
@@ -98,24 +98,61 @@ def cookie_delete(request):
 
 def post_detail(request, id):
     post = Post.objects.filter(id=id)
-    comments = post.comments.filter(active=True)
-    new_comment = None
-    # Comment posted
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        if comment_form.is_valid():
+    
 
-            # Create Comment object but don't save to database yet
-            new_comment = comment_form.save(commit=False)
-            # Assign the current post to the comment
-            new_comment.post = post
-            # Save the comment to the database
-            new_comment.save()
+    return render(request, 'post_detail.html', {'post': post})
+
+@login_required
+def postpreference(request, postid, userpreference):
+    if request.method == "POST":
+        post = get_object_or_404(Post, id=postid)
+        obj = ""
+        valueobj = ""
+        try:
+            obj = LikeDislike.objects.get(user=request.user, post=post)
+            valueobj = obj.value #value of userpreference
+            valueobj = int(valueobj)
+            userpreference = int(preference)
+            if valueobj != userpreference:
+                obj.delete()
+                upref = LikeDislike()
+                upref.user = request.user
+
+                upref.post = post
+                upref.value = userpreference
+
+                if userpreference == 1 and valueobj != 1:
+                    post.likes += 1
+                    post.dislikes -=1
+                elif userprefence == 2 and valueobj !=2:
+                    post.dislikes += 1
+                    post.likes  -=1
+                upref.save()
+                post.save()
+
+                return render(request, 'post_detail.html', {'post': post, 'postid':postid})
+            elif valueobj == userprefence:
+                obj.delete()
+                if userpreference == 1:
+                    post.likes -=1
+                elif userpreference == 2:
+                    post.dislikes -= 1
+                post.save()
+
+                return render(request, 'post_detail.html', {'post': post, 'postid': postid})
+        except LikeDislike.DoesNotExist:
+            upref = LikeDislike()
+            upref.user = request.user
+            upref.post = post
+            upref.value = userpreference
+            userpreference = int(userpreference)
+            if  userprefence == 1:
+                post.likes += 1
+            elif userpreference == 2:
+                post.dislikes += 1
+            upref.save()
+            post.save()
+            return render(request, 'post_detail.html', {'post': post, 'postid': postid})
     else:
-        comment_form = CommentForm()
-
-    return render(request, 'post_detail.html', {'post': post,
-                                           'comments': comments,
-                                           'new_comment': new_comment,
-                                           'comment_form': comment_form})
-
+        post= get_object_or_404(Post, id=postid)
+        return render(request, 'post_detail.html', {'post': post, 'postid': postid})
