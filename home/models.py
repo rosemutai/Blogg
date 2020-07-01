@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 
+
 User = get_user_model()
 
 # Create your models here.
@@ -33,11 +34,9 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         self.url = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
-     
-    
 
     def get_absolute_url(self):
-        return reverse('book_detail', kwargs={'pk': str(self.id)})
+        return reverse('post_detail', args={'pk': str(self.id)})
     
     def __str__(self):
         return self.title
@@ -64,4 +63,7 @@ class LikeDislike(models.Model):
 
     def __str__(self):
         return str(self.user) + ':' + str(self.post) + ':' + str(self.value)
-        
+    
+
+    class Meta:
+        unique_together = ("user", "post", "value")

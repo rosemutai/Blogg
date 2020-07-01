@@ -1,18 +1,32 @@
-<h1>Posts</h1>
+{% extends 'base2.html' %}
+{% load static %}
 
-<br /><br />
+{% block title %} blog-detail {% endblock %}
 
-<h1>Title: {{eachpost.title}}</h1>
+{% block content %} 
 
-<h1>Content: {{eachpost.content}}</h1>
+
+
+<h2 class="text-center">Posts</h2>
+
 <br />
 
-<h1>Author: {{ eachpost.author }}</h1>
+
+<h3>Title: {{post_detail.title}}</h3>
+<img src="{{post_detail.post_image.url}}" class="img-responsive" alt="">
+
+<p></p> {{post_detail.body}}
+<br />
 
 
-<a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{post.likes}} | <a href="#"
-    onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{post.dislikes}}
+<!-- <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{post.likes}} | <a href="#"
+    onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{post.dislikes}} -->
 
+    <button type="submit" class="btn btn-primary btn-sm"
+        onclick="document.getElementById('likebutton').submit()">Like</button>
+
+    <button type="submit" class="btn btn-danger btn-sm"
+        onclick="document.getElementById('dislikebutton').submit()">Dislike</button>
 
 <form id="likebutton" method="POST" action="{{post.id}}/preference/1/">
     {% csrf_token %}
@@ -23,3 +37,9 @@
     {% csrf_token %}
     <input type="hidden">
 </form>
+
+
+
+{% endblock %}
+
+

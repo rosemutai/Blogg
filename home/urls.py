@@ -16,5 +16,6 @@ urlpatterns = [
     path('testcookie', views.cookie_session, name="testcookie"),
     path('deletecookie', views.cookie_delete, name="deletecookie"),
     path('postdetail/<int:id>/', views.post_detail, name='post_detail'),
-    path('preference/<int:postid>/userprefernce/<int:userpreference>/', views.postpreference, name='postpreference'),
+    path('(?P<postid>\d+)/preference/(?P<userpreference>\d+)', views.postpreference, name='postpreference'),
+    # path('preference/<int:postid>/userprefernce/<int:userpreference>/', views.postpreference, name='postpreference'),
 ]

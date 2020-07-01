@@ -67,7 +67,7 @@ def about(request):
 
 def post_detail(request, id):
     post = get_object_or_404(Post, id=id)
-    return render(request, 'index:detail.html', {'post':post})
+    return render(request, 'index:post_detail.html', {'post':post})
 
 def search(request):
     queryset = Post.objects.all()
@@ -97,10 +97,8 @@ def cookie_delete(request):
 
 
 def post_detail(request, id):
-    post = Post.objects.filter(id=id)
-    
-
-    return render(request, 'post_detail.html', {'post': post})
+    mypost = Post.objects.filter(id=id)
+    return render(request, 'post_detail.html', {'mypost': mypost})
 
 @login_required
 def postpreference(request, postid, userpreference):
