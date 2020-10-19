@@ -9,15 +9,12 @@
             
             <div class="col md-8" id="midbarner">
                 {% for post in posts %}
-                <center><a class="cat-link-custom" href="{% url 'programming' %}"><h3 class="card-title ">{{ post.title }} </h3></a></center>
+                <p class="cat-link-custom" ><h3 class="card-title ">{{ post.title }} </h3></p>
                     <div class="card mt-3" style="width: 32rem;">
-                        
                         <img class="card-img-top custom" src="{{ post.post_image.url }}" alt="">
                         <div class="card-body custom-body">
                             <h5 class="card-title custom-alltitles"> 
                                 <p>{{ post.likes }} likes  | {{ post.dislikes }} Dislikes</p>
-                                 
-
                                 
                                 </h5>
                                 <form id="likebutton" method="POST" action="post/{{post.id}}/preference/1">
@@ -29,8 +26,9 @@
                                 {% csrf_token %}
                                 <input type="hidden">
                             </form>
-                            <p class="card-text">{{ post.description }} </p>
-                            <a href="#" >Read More</a>
+                            <a href="{{ post.get_absolute_url }}"><b>{{ post.description }}</b></a>
+                            <p class="card-text"> </p>
+                            <!-- <a href="#" >Read More</a> -->
 
                         </div>
                         <br>
@@ -42,11 +40,12 @@
             <div class="col md-4 ml-5">
                 <h4><u>Categories</u></h4>
                 <br>
-                   {% for cat in cat_count %} 
-                      <h5><a href="#">#{{ cat.category__name}}-</a> <b>{{cat.category__name__count }}</b></h5>
-                   <br>
-                    
-                   {% endfor %}
+                    {% for cat in cat_count %} 
+                        <h5><a href="#">#{{ cat.category__name}}-</a> <b>{{cat.category__name__count }}</b></h5>
+                        
+                    <br>
+                    {% endfor %}
+
                    <br>
             
                 </div>

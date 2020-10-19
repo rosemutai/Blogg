@@ -5,35 +5,35 @@
 
 {% block content %}
 
-        <div class="row">
-            
-            <div class="col">
-                {% for article in articles %}
-                <center><a class="cat-link-custom" href="{% url 'programming' %}"><h3 class="card-title ">{{  article.title }} </h3></a></center>
-                    <div class="card mt-3" style="width: 32rem;">
-                        
-                        <img class="card-img-top custom" src="{{ article.post_image.url }}" alt="">
-                        <div class="card-body custom-body">
-                            <h5 class="card-title custom-alltitles"> 
-                                <!-- <button type="submit" class="btn btn-primary btn-sm"
-                                onclick="document.getElementById('likebutton').submit()"
-                                >Like</button> {{ article.likes }} Likes |
-                                 
-                                 <button type="submit" class="btn btn-danger btn-sm"
-                                 onclick="document.getElementById('dislikebutton').submit()"
-                                 >Dislike</button> {{ article.dislikes }} DisLikes
-                                </h5> -->
-                            
-                            <p class="card-text">{{ article.description }} </p>
-                            <a href="#" >Read More</a>
-                            
-                        </div>
-                        <br>
-                    </div>    
-                {% endfor %}
-              
-             
-        </div>
+<div class="container">
+    <section class="text-center mb-4">
+        <div class="row wow fadeIn">
+            {% for article in articles %}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <br>
+                <br>
+                <div class="card">
+                    <div class="view overlay">
+                       <p class="post-title ml-3" href="{% url 'programming' %}">
+                           <h3 class="card-title ">{{  article.title }} </h3>
+                       </p>
+                        <a href="{{ article.get_absolute_url }}">
+                            <img class="card-img-top custom" src="{{ article.post_image.url }}" alt="">
+                        </a>
+                    </div>
+                    <div class="card-body text-center">
+                        <a href="" class="grey-text">
+                        </a>
+                        <b>
+                            <p class="mycard-text">{{ article.description }} </p>
+                        </b>
         
-                 
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </section>
+</div>
 {% endblock %}

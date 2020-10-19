@@ -12,10 +12,9 @@ urlpatterns = [
     path('search', views.search, name="search"),
     # path('comment', views.comment, name="comment"),
     path('articles', views.articles, name="articles"),
-    path('post_detail/<int:id>', views.post_detail, name="post_detail"),
     path('testcookie', views.cookie_session, name="testcookie"),
     path('deletecookie', views.cookie_delete, name="deletecookie"),
     path('postdetail/<int:id>/', views.post_detail, name='post_detail'),
-    path('(?P<postid>\d+)/preference/(?P<userpreference>\d+)', views.postpreference, name='postpreference'),
+    path('like_post', views.like_post, name="like_post"),
     # path('preference/<int:postid>/userprefernce/<int:userpreference>/', views.postpreference, name='postpreference'),
 ]

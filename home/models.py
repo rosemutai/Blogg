@@ -28,16 +28,16 @@ class Post(models.Model):
     featured = models.BooleanField()
     body = models.TextField()
     user = models.ManyToManyField(User, blank=True)
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name="likes", blank=True)
+
     
     def save(self, *args, **kwargs):
         self.url = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('post_detail', args={'pk': str(self.id)})
-    
+        return reverse('post_detail', args=[str(self.id)])
+
     def __str__(self):
         return self.title
 

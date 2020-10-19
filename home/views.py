@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q, Count
 import re
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Post, LikeDislike
@@ -50,7 +50,7 @@ def index(request):
     posts = Post.objects.order_by('timestamp')[:2]
     featured_posts = Post.objects.filter(featured=True)
     cat_count = get_category_count()
-    print (cat_count)
+    # print (cat_count)
     return render(request, 'index.html', {'posts': posts,'featured_posts': featured_posts, 'cat_count':cat_count})
 
 def programming(request):
@@ -64,10 +64,6 @@ def gardening(request):
 
 def about(request):
     return render(request, 'about.html')
-
-def post_detail(request, id):
-    post = get_object_or_404(Post, id=id)
-    return render(request, 'index:post_detail.html', {'post':post})
 
 def search(request):
     queryset = Post.objects.all()
@@ -97,60 +93,64 @@ def cookie_delete(request):
 
 
 def post_detail(request, id):
-    mypost = Post.objects.filter(id=id)
-    return render(request, 'post_detail.html', {'mypost': mypost})
+    post_detail = Post.objects.get(id=id)
+    return render(request, 'post_detail.html', {'post_detail': post_detail})
 
-@login_required
-def postpreference(request, postid, userpreference):
-    if request.method == "POST":
-        post = get_object_or_404(Post, id=postid)
-        obj = ""
-        valueobj = ""
-        try:
-            obj = LikeDislike.objects.get(user=request.user, post=post)
-            valueobj = obj.value #value of userpreference
-            valueobj = int(valueobj)
-            userpreference = int(preference)
-            if valueobj != userpreference:
-                obj.delete()
-                upref = LikeDislike()
-                upref.user = request.user
+def like_post(request):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post.likes.add(request.user)
+    return HttpResponseRedirect(post.get_absolute_url())
+# @login_required
+# def postpreference(request, postid, userpreference):
+#     if request.method == "POST":
+#         post = get_object_or_404(Post, id=postid)
+#         obj = ""
+#         valueobj = ""
+#         try:
+#             obj = LikeDislike.objects.get(user=request.user, post=post)
+#             valueobj = obj.value #value of userpreference
+#             valueobj = int(valueobj)
+#             userpreference = int(preference)
+#             if valueobj != userpreference:
+#                 obj.delete()
+#                 upref = LikeDislike()
+#                 upref.user = request.user
 
-                upref.post = post
-                upref.value = userpreference
+#                 upref.post = post
+#                 upref.value = userpreference
 
-                if userpreference == 1 and valueobj != 1:
-                    post.likes += 1
-                    post.dislikes -=1
-                elif userprefence == 2 and valueobj !=2:
-                    post.dislikes += 1
-                    post.likes  -=1
-                upref.save()
-                post.save()
+#                 if userpreference == 1 and valueobj != 1:
+#                     post.likes += 1
+#                     post.dislikes -=1
+#                 elif userprefence == 2 and valueobj !=2:
+#                     post.dislikes += 1
+#                     post.likes  -=1
+#                 upref.save()
+#                 post.save()
 
-                return render(request, 'post_detail.html', {'post': post, 'postid':postid})
-            elif valueobj == userprefence:
-                obj.delete()
-                if userpreference == 1:
-                    post.likes -=1
-                elif userpreference == 2:
-                    post.dislikes -= 1
-                post.save()
+#                 return render(request, 'post_detail.html', {'post': post, 'postid':postid})
+#             elif valueobj == userprefence:
+#                 obj.delete()
+#                 if userpreference == 1:
+#                     post.likes -=1
+#                 elif userpreference == 2:
+#                     post.dislikes -= 1
+#                 post.save()
 
-                return render(request, 'post_detail.html', {'post': post, 'postid': postid})
-        except LikeDislike.DoesNotExist:
-            upref = LikeDislike()
-            upref.user = request.user
-            upref.post = post
-            upref.value = userpreference
-            userpreference = int(userpreference)
-            if  userprefence == 1:
-                post.likes += 1
-            elif userpreference == 2:
-                post.dislikes += 1
-            upref.save()
-            post.save()
-            return render(request, 'post_detail.html', {'post': post, 'postid': postid})
-    else:
-        post= get_object_or_404(Post, id=postid)
-        return render(request, 'post_detail.html', {'post': post, 'postid': postid})
+#                 return render(request, 'post_detail.html', {'post': post, 'postid': postid})
+#         except LikeDislike.DoesNotExist:
+#             upref = LikeDislike()
+#             upref.user = request.user
+#             upref.post = post
+#             upref.value = userpreference
+#             userpreference = int(userpreference)
+#             if  userprefence == 1:
+#                 post.likes += 1
+#             elif userpreference == 2:
+#                 post.dislikes += 1
+#             upref.save()
+#             post.save()
+#             return render(request, 'post_detail.html', {'post': post, 'postid': postid})
+#     else:
+#         post= get_object_or_404(Post, id=postid)
+#         return render(request, 'post_detail.html', {'post': post, 'postid': postid})

@@ -5,28 +5,22 @@
 
 {% block content %} 
 
+<h3 class="postdetail-title ml-3 mt-3"> {{post_detail.title}}</h3>
+<img id="postdetail-image" src="{{post_detail.post_image.url}}" class="img-responsive ml-3" alt="" width="500" height="200">
 
-
-<h2 class="text-center">Posts</h2>
-
+<p class="postdetail-body ml-3"></p> {{post_detail.body | linebreaks }}
 <br />
 
+    <p class="my-btns ml-3">
+        <form action="{% url 'like_post' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" name="post_id"  value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button>
+        </form>
+        
 
-<h3>Title: {{post_detail.title}}</h3>
-<img src="{{post_detail.post_image.url}}" class="img-responsive" alt="">
-
-<p></p> {{post_detail.body}}
-<br />
-
-
-<!-- <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{post.likes}} | <a href="#"
-    onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{post.dislikes}} -->
-
-    <button type="submit" class="btn btn-primary btn-sm"
-        onclick="document.getElementById('likebutton').submit()">Like</button>
-
-    <button type="submit" class="btn btn-danger btn-sm"
-        onclick="document.getElementById('dislikebutton').submit()">Dislike</button>
+        <button type="submit" class="btn btn-danger btn-sm"
+            onclick="document.getElementById('dislikebutton').submit()">Dislike</button>
+    </p>
 
 <form id="likebutton" method="POST" action="{{post.id}}/preference/1/">
     {% csrf_token %}
