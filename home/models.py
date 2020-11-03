@@ -19,7 +19,6 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=50)
-    url= models.SlugField(max_length=300, default='')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
