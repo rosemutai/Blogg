@@ -3,54 +3,9 @@ from django.db.models import Q, Count
 import re
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.decorators import login_required
 from .models import Post, LikeDislike
-from .forms import  LoginForm, UserRegistrationForm
-# CommentForm
-
 
 # Create your views here.
-def user_login(request):
-    user = request.user
-    if user.is_authenticated:
-        return redirect('index')
-
-    if request.POST:
-        form = AuthenticationForm(request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(username=username, password=password)
-            if user:
-                login(request, user)
-                messages.info(request, f"You are now logged in as {username}")
-                return redirect('index')
-            
-    else:
-        form = AuthenticationForm()
-    return render(request, "login.html", {'form': form})
-
-
-
-def register(request):
-    if request.method == 'POST':
-        user_form = UserRegistrationForm(request.POST)
-        if user_form.is_valid():
-            new_user = user_form.save(commit=False)
-            new_user.set_password(
-                user_form.cleaned_data['password'])
-            new_user.save()
-            return render(request, 'register_done.html', {'new_user': new_user})
-    else:
-        user_form = UserRegistrationForm()
-    return render(request, 'register.html', {'user_form': user_form})
-
-def logout(request):
-    logout(request)
-    messages.success(request, "You have successfully logged out")
-    return redirect('/')
 
 def get_category_count():
     queryset = Post.objects.values('category__name').annotate(Count('category__name'))

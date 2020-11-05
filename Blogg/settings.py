@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     'crispy_forms',
     'home',
+    'accounts',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'Blogg.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,4 +128,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static' )
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media' )
-1
+
+LOGIN_REDIRECT_URL =  '/'
