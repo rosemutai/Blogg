@@ -22,47 +22,44 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
-    comments = models.IntegerField(default=True)
+    comments_count = models.IntegerField(default=0)
     post_image = models.ImageField(default='')
     featured = models.BooleanField()
     body = models.TextField()
     user = models.ManyToManyField(User, blank=True)
-    likes = models.ManyToManyField(User, related_name="likes", blank=True)
+    likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
 
-    
-    def save(self, *args, **kwargs):
-        self.url = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[str(self.id)])
 
     def __str__(self):
         return self.title
+    
+    def get_comments(self):
+        return self.comments.all()
 
 class PostComment(models.Model):
-    post = models.ForeignKey(Post,on_delete=models.CASCADE)
-    name = models.CharField(max_length=80)
-    email = models.EmailField()
-    body = models.TextField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
+    content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=False)
     
     class Meta:
         ordering = ['created_on']
 
     def __str__(self):
-        return 'Comment {} by {}'.format(self.body, self.name)
+        return self.content
 
-class LikeDislike(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    value = models.IntegerField()
-    date = models.DateTimeField(auto_now_add=True)
+class Preference(models.Model):
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
+    post= models.ForeignKey(Post, on_delete=models.CASCADE)
+    value= models.IntegerField()
+    date= models.DateTimeField(auto_now= True)
 
     def __str__(self):
-        return str(self.user) + ':' + str(self.post) + ':' + str(self.value)
-    
+        return str(self.user) + ':' + str(self.post) +':' + str(self.value)
 
     class Meta:
-        unique_together = ("user", "post", "value")
+       unique_together = ("user", "post", "value")

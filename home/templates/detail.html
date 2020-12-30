@@ -31,46 +31,61 @@
             <p class="lead font-weight-bold">Description</p>
   
             <p>{{ post.description }}</p>
-            {% for comment in comments %} 
+             
             
                 <div class="comments">
-                  {{ comment.name }}
-                  {{ comment.created_on }}
-                  {{ comment.body | linebreaks }}
-                </div>
-            
-            {% endfor %}
-            <p>{{ post.body }}</p>
-  
-             
-            <a href="#" class="btn btn-primary btn-md my-0 p">
-              Like
-              <i class="fas fa-shopping-cart ml-1"></i>
-            </a>
-            <a href="#" class="btn btn-danger btn-md my-0 p">
-              Dislike
-            </a>
-  
-  
-          </div>
-         
-  
-        </div>
-      
-  
-      </div>
-      
-      <hr>
-  
-      <!--Grid row-->
-      <div class="row d-flex justify-content-center wow fadeIn">
-  
-        <!--Grid column-->
-        <div class="col-md-6 text-center">
-  
-         
-        </div>
+                  {% for comm in get_comments %}
        
+                  <p> {{ comment.created_on |timesince }}|{{ comment.created_on |timesince }}ago</p>
+                  {{ comment.content  }}
+
+                  {% endfor %}
+             </div>
+            <p>{{ post.body }}</p>
+            {{post.id}}
+            <br>
+  
+            
+
+            <a href="#" onClick="document.getElementById('likebutton').submit()" class="btn btn-primary btn-md my-0 p">Like</a> {{post.likes}}   |   
+            <a href="#" onClick="document.getElementById('dislikebutton').submit()" class="btn btn-danger btn-md my-0 p">Dislike</a> {{post.dislikes}}
+          
+            <form id="likebutton" method="POST" action="postdetail/{{post.id}}/1/">
+                {% csrf_token %}
+                <input type="hidden">
+          </form>
+
+           <form id="dislikebutton" method="POST" action="/0/">
+                {% csrf_token %}
+                <input type="hidden">
+          </form>
+    
+          </div>
+    
+        </div>
+          <!-- {% if request.user.is_authenticated %} -->
+            <form method="post">
+              {% csrf_token %}
+              <div class="row">
+                <div class="form-control col-md-12 mb-4">
+                      {% for field in form %}
+                      {{form.content.label}}
+                       {{form.content }}
+                       {% endfor %}
+                       <br>
+                      <button class="tn btn-primary mb-3">Submit</button>
+                </div>
+             
+                   
+              </div>
+              
+            </form>
+            <!-- {% endif %} -->
+      <br>
+      <br>
+      <br>
+      </div>
+    
   
       </div>
      

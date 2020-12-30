@@ -5,54 +5,62 @@
 
 {% block content %}
 
-        <div class="row">
-            
-            <div class="col md-8" id="midbarner">
-                {% for post in posts %}
-                <p class="cat-link-custom" ><h3 class="card-title ">{{ post.title }} </h3></p>
-                    <div class="card mt-3" style="width: 32rem; border: none;">
-                        <img class="card-img-top custom" src="{{ post.post_image.url }}" alt="">
-                        <div class="card-body custom-body">
-                            <h5 class="card-title custom-alltitles"> 
-                                <p>{{ post.likes }} likes  | {{ post.dislikes }} Dislikes</p>
-                                
-                                </h5>
-                                <form id="likebutton" method="POST" action="post/{{post.id}}/preference/1">
-                                {% csrf_token %}
-                                <input type="hidden">
-                            </form>
+<style>
+    .categories,
+    .trending{
+        font-weight: 700;
+        color: burlywood;
+    }
 
-                            <form id="dislikebutton" method="POST" action="post/{{post.id}}/preference/2">
-                                {% csrf_token %}
-                                <input type="hidden">
-                            </form>
-                            <a href="{{ post.get_absolute_url }}"><b>{{ post.description }}</b></a>
-                            <p class="card-text"> </p>
-                            <!-- <a href="#" >Read More</a> -->
+   a.category-title{
+        color: #777;
+        text-decoration: none;
+    }
+    a.category-title:hover{
+        background: burlywood;
+        color: white;
+    }
 
-                        </div>
-                        <br>
-                    </div>    
-                {% endfor %}
-                <br>
-                <br>
-            </div>
-            <div class="col md-4 ml-5">
-                <h4><u>Categories</u></h4>
-                <br>
-                    {% for cat in cat_count %} 
-                        <h5><a href="#">#{{ cat.category__name}}-</a> <b>{{cat.category__name__count }}</b></h5>
-                        
-                    <br>
-                    {% endfor %}
+    .latest-blogs li{
+        margin: auto;
+        text-align: center;
+    }
+</style>
 
-                   <br>
-            
-                </div>
+<div class="row">
+    <div class="col md-4 ml-2">
+        <h3 class="categories mt-2 ">Categories</h3>
+        <br>
+        {% for cat in cat_count %}
+        <h5><a  class="category-title" href="#">#{{ cat.category__name}}-</a>{{cat.category__name__count }}</h5>
+        <br>
+        <br>
+        {% endfor %}
 
-                
+
+        <h3 class="trending mt-3">trending</h3>
+        {% for post in featured_posts %}
+        <a href="{{post.get_absolute_url }}"><span class="badge bg-info text-dark mt-3">{{post.title}}</span></a>
+        {% endfor %}
+    </div>
+    <div class="col md-1"></div>
+
+    
+    {% for post in posts %}
+     <div class="col md-7 ">
+         <div class="card mt-2 mr-3" style="width: 32rem; border: none;">
+            <img class="card-img-top custom" src="{{ post.post_image.url }}" alt="">
+            <div class="card-body custom-body">
+                <h5 class="card-title ">{{ post.title }} </h5>
+                <p>{{ post.description }}</p>
+                <a  href="{{ post.get_absolute_url }}" class="btn btn-primary"><b>More</b></a>
             </div>
         </div>
-    </div>
+     </div>
 
+    {% endfor %}
+
+   
+</div>
+{% include 'footer.html' %}
 {% endblock %}
